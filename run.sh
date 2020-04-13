@@ -1,6 +1,6 @@
 #!/bin/bash
 
-target_script="${1:-"basic-algo.py"}"
+target_script="${1:-"algorithms/basic-algo.py"}"
 config_file="${2:-"config/.env"}"
 
 docker run --rm \
