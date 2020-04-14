@@ -6,5 +6,5 @@ config_file="${2:-"config/.env"}"
 docker run --rm \
     -v $PWD:/work -w /work \
     --env-file "$config_file" \
-    james-fulford/zipline \
+    jamespfulford/pylivetrader:latest \
     pylivetrader run -f "$target_script"
