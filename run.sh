@@ -12,6 +12,7 @@ fi
 
 docker run --rm \
     -v $PWD:/work -w /work \
+    --name pylivetrader \
     --env-file "$config_file" \
     $optional_args \
     jamespfulford/pylivetrader:latest \
