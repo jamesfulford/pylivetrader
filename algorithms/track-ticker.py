@@ -1,4 +1,8 @@
-import pylivetrader.api as algo
+from pylivetrader.api import *
+import logbook
+
+
+log = logbook.Logger('track-ticker')
 
 
 def enter_play(context, data):
@@ -11,6 +15,8 @@ def enter_play(context, data):
     slow_sma = data.history(s, 'price', context.slow_sma_days, '1d').mean()
     
     context.target_percentage = context.exit_percentage if fast_sma < slow_sma else context.enter_percentage
+
+    print("Current target percentage: {.2f}".format(context.target_percentage))
 
     order_target_percent(s, context.target_percentage)
 
@@ -26,16 +32,21 @@ def initialize(context):
     
     context.ticker = symbol('QQQ')
 
-    algo.schedule_function(
+    if context.target_percentage:
+        log.info("Current target percentage: {}".format(round(context.target_percentage * 100, 2)))
+    else:
+        log.info("Fresh context")
+
+    schedule_function(
         enter_play,
-        algo.date_rules.every_day(),
-        algo.time_rules.market_open(minutes=context.trade_at_minute),
+        date_rules.every_day(),
+        time_rules.market_open(minutes=context.trade_at_minute),
     )
 
-#     algo.schedule_function(
+#     schedule_function(
 #         record_vars,
-#         algo.date_rules.every_day(),
-#         algo.time_rules.market_close(),
+#         date_rules.every_day(),
+#         time_rules.market_close(),
 #     )
 
 
