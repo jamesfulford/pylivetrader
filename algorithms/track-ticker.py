@@ -16,7 +16,7 @@ def enter_play(context, data):
     
     context.target_percentage = context.exit_percentage if fast_sma < slow_sma else context.enter_percentage
 
-    print("Current target percentage: {.2f}".format(context.target_percentage))
+    print("Current target percentage: {}".format(round(context.target_percentage * 100, 2)))
 
     order_target_percent(s, context.target_percentage)
 
